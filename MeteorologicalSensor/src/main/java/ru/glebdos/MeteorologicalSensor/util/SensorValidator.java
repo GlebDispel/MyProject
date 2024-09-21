@@ -10,7 +10,6 @@ import ru.glebdos.MeteorologicalSensor.dto.SensorDTO;
 import ru.glebdos.MeteorologicalSensor.models.Sensor;
 import ru.glebdos.MeteorologicalSensor.services.SensorService;
 
-import java.util.Optional;
 
 @Component
 public class SensorValidator implements Validator {

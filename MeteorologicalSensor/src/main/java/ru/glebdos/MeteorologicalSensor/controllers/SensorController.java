@@ -2,19 +2,16 @@ package ru.glebdos.MeteorologicalSensor.controllers;
 
 
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.glebdos.MeteorologicalSensor.dto.SensorDTO;
-import ru.glebdos.MeteorologicalSensor.models.Sensor;
 import ru.glebdos.MeteorologicalSensor.services.SensorService;
 import ru.glebdos.MeteorologicalSensor.util.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ru.glebdos.MeteorologicalSensor.util.ErrorMessage.returnErrorMessage;
 

@@ -2,20 +2,14 @@ package ru.glebdos.MeteorologicalSensor.controllers;
 
 
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.glebdos.MeteorologicalSensor.dto.MeasurementDTO;
-import ru.glebdos.MeteorologicalSensor.models.Measurement;
-import ru.glebdos.MeteorologicalSensor.repositories.MeasurementRepository;
+import ru.glebdos.MeteorologicalSensor.dto.MeasurementResponse;
 import ru.glebdos.MeteorologicalSensor.services.MeasurementService;
-import ru.glebdos.MeteorologicalSensor.util.ErrorMessage;
-import ru.glebdos.MeteorologicalSensor.util.MeasurementErrorResponse;
-import ru.glebdos.MeteorologicalSensor.util.MeasurementException;
 import ru.glebdos.MeteorologicalSensor.util.MeasurementValidator;
 
 import java.util.List;
@@ -37,7 +31,7 @@ public class MeasurementController {
     }
 
     @GetMapping
-    public List<MeasurementDTO> getMeasurements() {
+    public MeasurementResponse getMeasurements() {
         return measurementService.findAll();
     }
 
