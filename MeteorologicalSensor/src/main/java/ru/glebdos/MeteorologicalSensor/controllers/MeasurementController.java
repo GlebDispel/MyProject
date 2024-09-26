@@ -21,13 +21,11 @@ import static ru.glebdos.MeteorologicalSensor.util.ErrorMessage.returnErrorMessa
 public class MeasurementController {
 
     private final MeasurementService measurementService;
-    private final MeasurementValidator measurementValidator;
 
     @Autowired
-    public MeasurementController(MeasurementService measurementService, MeasurementValidator measurementValidator) {
+    public MeasurementController(MeasurementService measurementService) {
         this.measurementService = measurementService;
 
-        this.measurementValidator = measurementValidator;
     }
 
     @GetMapping
@@ -43,13 +41,8 @@ public class MeasurementController {
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> addMeasurement(@RequestBody @Valid MeasurementDTO measurementDTO,
                                                      BindingResult bindingResult) {
-        measurementValidator.validate(measurementDTO, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-          returnErrorMessage(bindingResult);
-        }
-
-        measurementService.addMeasurement(measurementDTO);
+        measurementService.addMeasurement(measurementDTO, bindingResult);
         return ResponseEntity.ok(HttpStatus.OK);
 
     }

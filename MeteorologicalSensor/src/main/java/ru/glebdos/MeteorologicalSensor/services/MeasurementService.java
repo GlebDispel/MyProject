@@ -5,15 +5,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 import ru.glebdos.MeteorologicalSensor.dto.MeasurementDTO;
 import ru.glebdos.MeteorologicalSensor.dto.MeasurementResponse;
 import ru.glebdos.MeteorologicalSensor.models.Measurement;
 import ru.glebdos.MeteorologicalSensor.repositories.MeasurementRepository;
+import ru.glebdos.MeteorologicalSensor.util.MeasurementValidator;
 
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ru.glebdos.MeteorologicalSensor.util.ErrorMessage.returnErrorMessage;
 
 
 @Service
@@ -23,14 +27,16 @@ public class MeasurementService {
     private final MeasurementRepository measurementRepository;
     private final SensorService sensorService;
     private final ModelMapper modelMapper;
+    private final MeasurementValidator measurementValidator;
 
 
     @Autowired
     public MeasurementService(MeasurementRepository measurementRepository,
-                              SensorService sensorService, ModelMapper modelMapper) {
+                              SensorService sensorService, ModelMapper modelMapper, MeasurementValidator measurementValidator) {
         this.measurementRepository = measurementRepository;
         this.sensorService = sensorService;
         this.modelMapper = modelMapper;
+        this.measurementValidator = measurementValidator;
     }
 
     public MeasurementResponse findAll() {
@@ -44,7 +50,15 @@ public class MeasurementService {
     }
 
     @Transactional
-    public void addMeasurement(MeasurementDTO measurementDTO) {
+    public void addMeasurement(MeasurementDTO measurementDTO, BindingResult bindingResult) {
+
+        measurementValidator.validate(measurementDTO, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            returnErrorMessage(bindingResult);
+        }
+
+
         Measurement localMeasurement = convertToMeasurement(measurementDTO);
 
 

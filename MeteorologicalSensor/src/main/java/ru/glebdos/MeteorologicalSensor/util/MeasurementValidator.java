@@ -6,16 +6,16 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.glebdos.MeteorologicalSensor.dto.MeasurementDTO;
 import ru.glebdos.MeteorologicalSensor.models.Measurement;
-import ru.glebdos.MeteorologicalSensor.services.SensorService;
+import ru.glebdos.MeteorologicalSensor.repositories.SensorRepository;
 
 @Component
 public class MeasurementValidator implements Validator {
 
-    private final SensorService sensorService;
+    private final SensorRepository sensorRepository;
 
     @Autowired
-    public MeasurementValidator(SensorService sensorService) {
-        this.sensorService = sensorService;
+    public MeasurementValidator(SensorRepository sensorRepository) {
+        this.sensorRepository = sensorRepository;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class MeasurementValidator implements Validator {
         if(measurement.getSensor() == null)
             return;
 
-        if (sensorService.findSensorByName(measurement.getSensor().getName()).isEmpty())
+        if (sensorRepository.findByName(measurement.getSensor().getName()).isEmpty())
             errors.rejectValue("sensor", "", "Сенсор с таким именем не найден");
     }
 }

@@ -39,9 +39,10 @@ public class Measurement {
 
     public Measurement() {}
 
-    public Measurement(Double value, Boolean raining) {
+    public Measurement(Double value, Boolean raining,Sensor sensor) {
         this.value = value;
         this.raining = raining;
+        this.sensor = sensor;
     }
 
     public Integer getId() {

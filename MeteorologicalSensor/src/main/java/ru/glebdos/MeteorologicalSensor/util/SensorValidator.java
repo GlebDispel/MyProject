@@ -8,17 +8,18 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.glebdos.MeteorologicalSensor.dto.SensorDTO;
 import ru.glebdos.MeteorologicalSensor.models.Sensor;
-import ru.glebdos.MeteorologicalSensor.services.SensorService;
+import ru.glebdos.MeteorologicalSensor.repositories.SensorRepository;
 
 
 @Component
 public class SensorValidator implements Validator {
 
-    private final SensorService sensorService;
+    private final SensorRepository sensorRepository;
 
     @Autowired
-    public SensorValidator(SensorService sensorService) {
-        this.sensorService = sensorService;
+    public SensorValidator(SensorRepository sensorRepository) {
+        this.sensorRepository = sensorRepository;
+
     }
 
     @Override
@@ -29,7 +30,7 @@ public class SensorValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         SensorDTO sensor = (SensorDTO) target;
-        if (sensorService.findSensorByName(sensor.getName()).isPresent()) {
+        if (sensorRepository.findByName(sensor.getName()).isPresent()) {
             errors.rejectValue("name", "", "Сенсор с таким названием уже существует");
         }
     }
