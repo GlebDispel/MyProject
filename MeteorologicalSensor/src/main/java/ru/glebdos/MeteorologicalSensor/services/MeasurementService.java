@@ -45,7 +45,7 @@ public class MeasurementService {
                 .collect(Collectors.toList()));
     }
 
-    public Long rainyDaysCount() {
+    public Integer rainyDaysCount() {
         return measurementRepository.countByRainingTrue();
     }
 

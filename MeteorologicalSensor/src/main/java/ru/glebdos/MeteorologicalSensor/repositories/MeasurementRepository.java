@@ -7,5 +7,5 @@ import ru.glebdos.MeteorologicalSensor.models.Measurement;
 @Repository
 public interface MeasurementRepository extends JpaRepository<Measurement, Integer> {
 
-    Long countByRainingTrue();
+   Integer countByRainingTrue();
 }
